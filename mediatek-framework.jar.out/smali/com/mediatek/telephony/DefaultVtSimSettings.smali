@@ -104,116 +104,11 @@
 .end method
 
 .method public static setVtDefaultSim(Landroid/content/ContentResolver;[J[Z)V
-    .locals 7
+    .locals 0
     .parameter "contentResolver"
     .parameter "simIdForSlot"
     .parameter "isSimInserted"
 
     .prologue
-    .line 63
-    const-wide/16 v3, -0x5
-
-    .line 64
-    .local v3, nVTDefSIM:J
-    invoke-static {}, Lcom/mediatek/telephony/DefaultVtSimSettings;->get3GSimId()I
-
-    move-result v2
-
-    .line 70
-    .local v2, n3gSIMSlot:I
-    const-string v5, "phone"
-
-    invoke-static {v5}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
-
-    move-result-object v5
-
-    invoke-static {v5}, Lcom/android/internal/telephony/ITelephony$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ITelephony;
-
-    move-result-object v1
-
-    .line 72
-    .local v1, iTelephony:Lcom/android/internal/telephony/ITelephony;
-    if-eqz v1, :cond_1
-
-    :try_start_0
-    invoke-interface {v1}, Lcom/android/internal/telephony/ITelephony;->is3GSwitchManualEnabled()Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    invoke-interface {v1}, Lcom/android/internal/telephony/ITelephony;->is3GSwitchManualChange3GAllowed()Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    .line 74
-    const-string v5, "setVtDefaultSim set mVTDefSIM to 0"
-
-    invoke-static {v5}, Lcom/mediatek/telephony/DefaultVtSimSettings;->logd(Ljava/lang/String;)V
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 75
-    const-wide/16 v3, 0x0
-
-    .line 86
-    :cond_0
-    :goto_0
-    new-instance v5, Ljava/lang/StringBuilder;
-
-    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v6, "setVtDefaultSim -- nVTDefSIM : "
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-static {v5}, Lcom/mediatek/telephony/DefaultVtSimSettings;->logd(Ljava/lang/String;)V
-
-    .line 87
-    const-string v5, "video_call_sim_setting"
-
-    invoke-static {p0, v5, v3, v4}, Landroid/provider/Settings$System;->putLong(Landroid/content/ContentResolver;Ljava/lang/String;J)Z
-
-    .line 90
     return-void
-
-    .line 76
-    :cond_1
-    :try_start_1
-    aget-boolean v5, p2, v2
-
-    if-eqz v5, :cond_0
-
-    .line 77
-    aget-wide v3, p1, v2
-    :try_end_1
-    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
-
-    goto :goto_0
-
-    .line 79
-    :catch_0
-    move-exception v0
-
-    .line 80
-    .local v0, e:Landroid/os/RemoteException;
-    const-string v5, "PHONE"
-
-    const-string v6, "mTelephony exception"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_0
 .end method
