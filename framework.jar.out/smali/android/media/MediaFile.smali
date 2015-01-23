@@ -1825,3 +1825,26 @@
 
     goto :goto_1
 .end method
+
+.method public static getMimeTypeBySuffix(Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+    .parameter "filename"
+
+    .prologue
+    invoke-static {p0}, Landroid/media/MediaFile;->getFileType(Ljava/lang/String;)Landroid/media/MediaFile$MediaFileType;
+
+    move-result-object v0
+
+    .local v0, mdeiaFileType:Landroid/media/MediaFile$MediaFileType;
+    if-nez v0, :cond_0
+
+    const/4 v1, 0x0
+
+    :goto_0
+    return-object v1
+
+    :cond_0
+    iget-object v1, v0, Landroid/media/MediaFile$MediaFileType;->mimeType:Ljava/lang/String;
+
+    goto :goto_0
+.end method
