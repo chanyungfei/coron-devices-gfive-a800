@@ -610,26 +610,22 @@
     .end annotation
 
     .prologue
-    .line 332
-    invoke-virtual {p1}, Ljava/io/File;->getCanonicalPath()Ljava/lang/String;
+    invoke-virtual {p1}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 338
     .local v1, filename:Ljava/lang/String;
     const-string v2, "/sdcard"
 
-    .line 339
     .local v2, str0:Ljava/lang/String;
     const-string v3, "/sdcard2"
 
-    .line 341
     .local v3, str1:Ljava/lang/String;
     invoke-static {}, Landroid/os/RecoverySystem;->getExternalStorageStateStorageSdcard0()Ljava/lang/String;
 
     move-result-object v4
 
-    const-string/jumbo v5, "mounted"
+    const-string v5, "mounted"
 
     invoke-virtual {v4, v5}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 

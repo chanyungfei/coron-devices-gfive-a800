@@ -1441,7 +1441,7 @@
 
     move-result-object v8
 
-    const v9, 0x111000d
+    const v9, #android:bool@config_sf_limitedAlpha#t
 
     invoke-virtual {v8, v9}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -6044,7 +6044,7 @@
 
     move-result-object v2
 
-    const/high16 v4, 0x10e
+    const/high16 v4, #android:integer@config_shortAnimTime#h
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -6233,7 +6233,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
-    const v4, 0x10c0001
+    const v4, #android:interpolator@decelerate_quad#t
 
     invoke-static {v2, v4}, Landroid/view/animation/AnimationUtils;->loadInterpolator(Landroid/content/Context;I)Landroid/view/animation/Interpolator;
 
@@ -6286,7 +6286,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
-    const v4, 0x10c0001
+    const v4, #android:interpolator@decelerate_quad#t
 
     invoke-static {v2, v4}, Landroid/view/animation/AnimationUtils;->loadInterpolator(Landroid/content/Context;I)Landroid/view/animation/Interpolator;
 
@@ -6341,7 +6341,7 @@
 
     move-result-object v2
 
-    const/high16 v4, 0x10e
+    const/high16 v4, #android:integer@config_shortAnimTime#h
 
     invoke-virtual {v2, v4}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -11555,7 +11555,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
-    const v8, 0x10a0070
+    const v8, #android:anim@window_move_from_decor#t
 
     invoke-static {v2, v8}, Landroid/view/animation/AnimationUtils;->loadAnimation(Landroid/content/Context;I)Landroid/view/animation/Animation;
 
@@ -43545,7 +43545,7 @@
 
     move-result-object v17
 
-    const v19, 0x111002b
+    const v19, #android:bool@config_enableWallpaperService#t
 
     move-object/from16 v0, v17
 
