@@ -8953,7 +8953,15 @@
     :cond_5
     invoke-static {}, Landroid/os/AsyncTask;->init()V
 
-    sget-boolean v2, Landroid/app/ActivityThread;->IS_USER_BUILD:Z
+    invoke-static {v1}, Landroid/app/ActivityThread$BaiduInjector;->multiTheme_freeCanvas(Landroid/app/ActivityThread;)V
+
+    const-string v2, "user"
+
+    sget-object v3, Landroid/os/Build;->TYPE:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
 
     if-nez v2, :cond_6
 

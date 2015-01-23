@@ -16392,15 +16392,17 @@
 .end method
 
 .method public setMobileDataEnabled(Z)V
-    .locals 9
+    .locals 10
     .parameter "enabled"
 
     .prologue
-    const/16 v8, 0x11
+    const/16 v9, 0x11
 
-    const/4 v7, 0x0
+    const/4 v8, 0x5
 
-    const/4 v6, -0x1
+    const/4 v7, -0x1
+
+    const/4 v6, 0x0
 
     .line 1825
     invoke-direct {p0}, Lcom/android/server/ConnectivityService;->enforceChangePermission()V
@@ -16457,11 +16459,14 @@
     invoke-static {v3, v4}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 1831
-    if-eqz p1, :cond_5
+    if-eqz p1, :cond_4
 
-    if-ne v0, v6, :cond_5
+    if-ne v0, v7, :cond_4
+
+    const/4 v2, 0x0
 
     .line 1833
+    .local v2, simInfo:Landroid/provider/Telephony$SIMInfo;
     :try_start_0
     invoke-direct {p0}, Lcom/android/server/ConnectivityService;->getITelephony()Lcom/android/internal/telephony/ITelephony;
 
@@ -16482,39 +16487,67 @@
     invoke-static {v3, v4}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 1860
+    .end local v2           #simInfo:Landroid/provider/Telephony$SIMInfo;
     :cond_0
     :goto_0
     return-void
 
     .line 1839
+    .restart local v2       #simInfo:Landroid/provider/Telephony$SIMInfo;
     :cond_1
-    const/4 v2, 0x0
-
-    .local v2, simId:I
-    :goto_1
-    sget v3, Lcom/android/internal/telephony/PhoneConstants;->GEMINI_SIM_NUM:I
-
-    if-ge v2, v3, :cond_2
-
-    .line 1840
     iget-object v3, p0, Lcom/android/server/ConnectivityService;->mITelephony:Lcom/android/internal/telephony/ITelephony;
 
-    invoke-interface {v3, v2}, Lcom/android/internal/telephony/ITelephony;->getSimState(I)I
+    const/4 v4, 0x0
+
+    invoke-interface {v3, v4}, Lcom/android/internal/telephony/ITelephony;->getSimState(I)I
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result v3
 
-    const/4 v4, 0x5
+    if-ne v3, v8, :cond_2
 
-    if-ne v3, v4, :cond_3
+    .line 1820
+    const/4 v0, 0x0
 
-    .line 1841
-    move v0, v2
+    .line 1832
+    :goto_1
+    invoke-static {p0, v0}, Lcom/android/server/ConnectivityService$BaiduInjector;->getDefaultSlot(Lcom/android/server/ConnectivityService;I)I
 
-    .line 1846
+    move-result v0
+
+    iget-object v3, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
+
+    iget-object v4, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
+
+    invoke-virtual {v4, v9, v0, v6}, Lcom/android/server/ConnectivityService$InternalHandler;->obtainMessage(III)Landroid/os/Message;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Lcom/android/server/ConnectivityService$InternalHandler;->sendMessage(Landroid/os/Message;)Z
+
+    goto :goto_0
+
+    .line 1821
     :cond_2
-    if-ne v0, v6, :cond_4
+    :try_start_1
+    iget-object v3, p0, Lcom/android/server/ConnectivityService;->mITelephony:Lcom/android/internal/telephony/ITelephony;
 
-    .line 1847
+    const/4 v4, 0x1
+
+    invoke-interface {v3, v4}, Lcom/android/internal/telephony/ITelephony;->getSimState(I)I
+
+    move-result v3
+
+    if-ne v3, v8, :cond_3
+
+    .line 1822
+    const/4 v0, 0x1
+
+    goto :goto_1
+
+    .line 1824
+    :cond_3
     const-string v3, "ConnectivityService"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16542,13 +16575,12 @@
     move-result-object v4
 
     invoke-static {v3, v4}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+    :try_end_1
+    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
     goto :goto_0
 
     .line 1850
-    .end local v2           #simId:I
     :catch_0
     move-exception v1
 
@@ -16560,29 +16592,8 @@
 
     .line 1839
     .end local v1           #e:Landroid/os/RemoteException;
-    .restart local v2       #simId:I
-    :cond_3
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_1
-
-    .line 1855
+    .end local v2           #simInfo:Landroid/provider/Telephony$SIMInfo;
     :cond_4
-    iget-object v3, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
-
-    iget-object v4, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
-
-    invoke-virtual {v4, v8, v0, v7}, Lcom/android/server/ConnectivityService$InternalHandler;->obtainMessage(III)Landroid/os/Message;
-
-    move-result-object v4
-
-    invoke-virtual {v3, v4}, Lcom/android/server/ConnectivityService$InternalHandler;->sendMessage(Landroid/os/Message;)Z
-
-    goto :goto_0
-
-    .line 1856
-    .end local v2           #simId:I
-    :cond_5
     if-nez p1, :cond_0
 
     .line 1857
@@ -16590,7 +16601,7 @@
 
     iget-object v4, p0, Lcom/android/server/ConnectivityService;->mHandler:Lcom/android/server/ConnectivityService$InternalHandler;
 
-    invoke-virtual {v4, v8, v6, v7}, Lcom/android/server/ConnectivityService$InternalHandler;->obtainMessage(III)Landroid/os/Message;
+    invoke-virtual {v4, v9, v7, v6}, Lcom/android/server/ConnectivityService$InternalHandler;->obtainMessage(III)Landroid/os/Message;
 
     move-result-object v4
 

@@ -4582,39 +4582,12 @@
 
     invoke-virtual {v0, v4}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
 
-    invoke-virtual/range {v46 .. v46}, Landroid/content/Intent;->getCategories()Ljava/util/Set;
-
-    move-result-object v4
-
-    if-eqz v4, :cond_0
-
-    invoke-virtual/range {v46 .. v46}, Landroid/content/Intent;->getCategories()Ljava/util/Set;
-
-    move-result-object v4
-
-    const-string v6, "android.intent.category.ALTERNATIVE"
-
-    invoke-interface {v4, v6}, Ljava/util/Set;->contains(Ljava/lang/Object;)Z
-
-    move-result v4
-
-    if-eqz v4, :cond_0
-
-    .line 12502
-    invoke-virtual/range {v46 .. v46}, Landroid/content/Intent;->getFlags()I
-
-    move-result v4
-
-    const v6, -0x10000001
-
-    and-int/2addr v4, v6
-
     move-object/from16 v0, v46
 
-    invoke-virtual {v0, v4}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
+    move-object/from16 v1, p0
 
-    .line 12508
-    :cond_0
+    invoke-direct {v1, v0}, Lcom/android/server/am/ActivityManagerService;->removeIncludeFlags(Landroid/content/Intent;)V
+
     const-string v6, "ActivityManager"
 
     new-instance v10, Ljava/lang/StringBuilder;
@@ -6072,6 +6045,20 @@
     invoke-virtual {v4, v0, v1}, Lcom/android/server/am/ActivityManagerPlus;->updateRegisterReceivers(Ljava/util/List;Landroid/content/Intent;)V
 
     :cond_1e
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/am/ActivityManagerService;->mLruProcesses:Ljava/util/ArrayList;
+
+    move-object/from16 v0, v25
+
+    move-object/from16 v1, v16
+
+    move-object/from16 v2, v46
+
+    move/from16 v3, p13
+
+    invoke-static {v0, v1, v2, v4, v3}, Lcom/baidu/security/bm/BroadcastManagerService;->filterBroadcastReceiver(Ljava/util/List;Ljava/util/List;Landroid/content/Intent;Ljava/util/ArrayList;I)I
+
     invoke-virtual/range {v46 .. v46}, Landroid/content/Intent;->getFlags()I
 
     move-result v4
@@ -6809,6 +6796,11 @@
     .end local v58           #seq:I
     :cond_38
     if-eqz v56, :cond_3a
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
+    invoke-static {v4, v8}, Lcom/android/server/am/BaiduBroadcastInjector;->tryHookMessageBroadcast(Landroid/content/Context;Lcom/android/server/am/BroadcastRecord;)V
 
     invoke-virtual {v9, v8}, Lcom/android/server/am/BroadcastQueue;->replaceOrderedBroadcastLocked(Lcom/android/server/am/BroadcastRecord;)Z
 
